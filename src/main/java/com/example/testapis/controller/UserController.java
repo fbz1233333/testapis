@@ -54,12 +54,12 @@ public class UserController {
 
     @PostMapping("user/getByColumns")
     public Object getByColumns(@RequestBody GetColumnsSelectedRq getColumnsSelectedRq){
+        HashMap<String,Object> map=new HashMap<>();
 
         String columns=getColumnsSelectedRq.getColumns();
-//        for (String s: columns){
-//            logger.info("请求的columns为:{}",s);
-//        }
         logger.info("请求所得:{}",columns);
-        return null;
+        map.put("userList",userMapper.findColumnsSelective(columns));
+
+        return map;
     }
 }

@@ -128,8 +128,8 @@
     from user
   </select>
 
-  <select id="findColumnsSelective" resultType="java.lang.Object">
-    select #{columns,jdbcType=VARCHAR}
+  <select id="findColumnsSelective" resultMap="BaseResultMap">
+    select ${columns}
     from user
   </select>
 

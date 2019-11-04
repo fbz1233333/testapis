@@ -21,7 +21,7 @@ public interface UserMapper {
 
     List<User> findAll();
 
-    List<Object> findColumnsSelective(@Param("columns")String columns);
+    List<User> findColumnsSelective(@Param("columns")String columns);
 
-    List<User> getIds(List<String> ids);
+
 }
