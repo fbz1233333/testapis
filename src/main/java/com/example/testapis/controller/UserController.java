@@ -2,7 +2,7 @@ package com.example.testapis.controller;
 
 import com.example.testapis.entity.User;
 import com.example.testapis.mapper.UserMapper;
-import com.example.testapis.requests.GetColumnsSelected;
+import com.example.testapis.requests.GetColumnsSelectedRq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -54,10 +53,13 @@ public class UserController {
     }
 
     @PostMapping("user/getByColumns")
-    public Object getByColumns(@RequestBody GetColumnsSelected getColumnsSelected){
+    public Object getByColumns(@RequestBody GetColumnsSelectedRq getColumnsSelectedRq){
 
-        String columns=getColumnsSelected.getColumns();
-        logger.info("请求的字段包括:{}",columns);
+        String columns=getColumnsSelectedRq.getColumns();
+//        for (String s: columns){
+//            logger.info("请求的columns为:{}",s);
+//        }
+        logger.info("请求所得:{}",columns);
         return null;
     }
 }

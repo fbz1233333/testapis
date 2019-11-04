@@ -20,4 +20,8 @@ public interface UserMapper {
     List<User> findAllByIsDel(@Param("isDel") Integer isDel);
 
     List<User> findAll();
+
+    List<Object> findColumnsSelective(@Param("columns")String columns);
+
+    List<User> getIds(List<String> ids);
 }

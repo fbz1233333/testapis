@@ -17,7 +17,7 @@
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from user
     where id = #{id,jdbcType=VARCHAR}
@@ -29,10 +29,10 @@
   </delete>
   <insert id="insert" parameterType="com.example.testapis.entity.User">
     <!--@mbg.generated-->
-    insert into user (id, `name`, `password`, 
+    insert into user (id, `name`, `password`,
       is_del, create_time, update_time
       )
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -126,5 +126,19 @@
     select
     <include refid="Base_Column_List" />
     from user
+  </select>
+
+  <select id="findColumnsSelective" resultType="java.lang.Object">
+    select #{columns,jdbcType=VARCHAR}
+    from user
+  </select>
+
+  <select id="getIds" resultMap="BaseResultMap">
+    select * from
+    user
+    where id in
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
   </select>
 </mapper>
