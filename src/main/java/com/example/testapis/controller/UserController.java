@@ -2,6 +2,7 @@ package com.example.testapis.controller;
 
 import com.example.testapis.entity.User;
 import com.example.testapis.mapper.UserMapper;
+import com.example.testapis.requests.GetColumnsSelected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,30 @@ public class UserController {
         return map;
     }
 
-    @PostMapping("user/update")
-    public void updateUser(@RequestBody User user){
+    @PatchMapping("user/update")
+    public String updateUser(@RequestBody User user){
         logger.info("请求所得User:{}",user);
+
+//      理当作为自动配置的信息
+//        user.setUpdateTime(new Date());
+
         userMapper.updateByPrimaryKeySelective(user);
+        return "success";
+    }
+
+    @PostMapping("user/insert")
+    public String insertUser(@RequestBody User user){
+        logger.info("请求所得的数据User:{}",user);
+        user.setUpdateTime(new Date());
+        userMapper.insert(user);
+        return "success";
+    }
+
+    @PostMapping("user/getByColumns")
+    public Object getByColumns(@RequestBody GetColumnsSelected getColumnsSelected){
+
+        String columns=getColumnsSelected.getColumns();
+        logger.info("请求的字段包括:{}",columns);
+        return null;
     }
 }
