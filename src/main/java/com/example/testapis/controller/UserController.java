@@ -4,7 +4,6 @@ import com.example.testapis.entity.User;
 import com.example.testapis.info.LoginInfo;
 import com.example.testapis.info.PageInfo;
 import com.example.testapis.mapper.UserMapper;
-import com.example.testapis.requests.GetColumnsSelectedRq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +66,7 @@ public class UserController {
 
     @PostMapping("user/login")
     public Object login(@RequestBody LoginInfo loginInfo){
+        logger.info("loginInfo:{}",loginInfo);
         HashMap<String ,Object> map=new HashMap<>();
 
         map.put("userInfo",userMapper.findIdAndNameAndIsDelByNameAndPassword(loginInfo));
