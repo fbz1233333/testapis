@@ -1,10 +1,11 @@
 package com.example.testapis.mapper;
 import org.apache.ibatis.annotations.Param;
-import java.util.List;
 
 import com.example.testapis.entity.Media;
+import com.example.testapis.info.PageInfo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
 @Mapper
 public interface MediaMapper {
     int deleteByPrimaryKey(String id);
@@ -19,7 +20,12 @@ public interface MediaMapper {
 
     int updateByPrimaryKey(Media record);
 
+    List<Media> findAllByPage(PageInfo pageInfo);
+
     List<Media> findAll();
 
+    Integer countById(@Param("id")String id);
+
+    Integer count();
 
 }

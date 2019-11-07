@@ -1,6 +1,7 @@
 package com.example.testapis.controller;
 
 import com.example.testapis.entity.User;
+import com.example.testapis.info.PageInfo;
 import com.example.testapis.mapper.UserMapper;
 import com.example.testapis.requests.GetColumnsSelectedRq;
 import org.slf4j.Logger;
@@ -52,13 +53,13 @@ public class UserController {
         return "success";
     }
 
-    @PostMapping("user/getByColumns")
-    public Object getByColumns(@RequestBody GetColumnsSelectedRq getColumnsSelectedRq){
-        HashMap<String,Object> map=new HashMap<>();
 
-        String columns=getColumnsSelectedRq.getColumns();
-        logger.info("请求所得:{}",columns);
-        map.put("userList",userMapper.findColumnsSelective(columns));
+
+    @PostMapping("user/getByPage")
+    public Object getUsersByPages(@RequestBody PageInfo pageInfo){
+        HashMap<String ,Object> map=new HashMap<>();
+        map.put("userList",userMapper.findAllByPage(pageInfo));
+        map.put("userCount",userMapper.count());
 
         return map;
     }
