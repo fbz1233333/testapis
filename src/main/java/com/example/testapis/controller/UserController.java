@@ -1,6 +1,7 @@
 package com.example.testapis.controller;
 
 import com.example.testapis.entity.User;
+import com.example.testapis.info.LoginInfo;
 import com.example.testapis.info.PageInfo;
 import com.example.testapis.mapper.UserMapper;
 import com.example.testapis.requests.GetColumnsSelectedRq;
@@ -61,6 +62,14 @@ public class UserController {
         map.put("userList",userMapper.findAllByPage(pageInfo));
         map.put("userCount",userMapper.count());
 
+        return map;
+    }
+
+    @PostMapping("user/login")
+    public Object login(@RequestBody LoginInfo loginInfo){
+        HashMap<String ,Object> map=new HashMap<>();
+
+        map.put("userInfo",userMapper.findIdAndNameAndIsDelByNameAndPassword(loginInfo));
         return map;
     }
 }

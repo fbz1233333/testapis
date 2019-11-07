@@ -1,6 +1,8 @@
 package com.example.testapis.controller;
 
 import com.example.testapis.entity.Media;
+import com.example.testapis.info.KindAndHotLimit;
+import com.example.testapis.info.MixedInfo;
 import com.example.testapis.info.PageInfo;
 import com.example.testapis.mapper.MediaMapper;
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +64,34 @@ public class MediaController {
         return map;
     }
 
+//    @PostMapping("media/getMediaHot")
+//    public Object getMediaByKindAndHot(@RequestBody KindAndHotLimit kindAndHotLimit){
+//        logger.info("获取的Info为:{}",kindAndHotLimit);
+//        HashMap<String,Object> map=new HashMap<>();
+//        map.put("mediaList",mediaMapper.findAllByKindInfoAndHot(kindAndHotLimit));
+//        return map;
+//    }
 
+
+    @PostMapping("media/getMixedMediaLimit")
+    public Object getMixedMedia(@RequestBody MixedInfo mixedInfo){
+        logger.info("获取的info为:{}",mixedInfo);
+        HashMap<String,Object> map=new HashMap<>();
+        for (String kindStr:mixedInfo.getMixedStr()){
+            logger.info("当前的kind为:{}",kindStr);
+
+
+            KindAndHotLimit kindAndHotLimit=new KindAndHotLimit();
+            kindAndHotLimit.setKind(kindStr);
+            kindAndHotLimit.setLimit(mixedInfo.getLimit());
+            List<Media> medias=mediaMapper.findAllByKindInfoAndHot(kindAndHotLimit);
+
+
+            logger.info("请求所得medias:{}",medias);
+            map.put(kindStr.toLowerCase()+"List",medias);
+        }
+
+        return map;
+    }
 
 }

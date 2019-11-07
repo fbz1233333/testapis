@@ -1,11 +1,8 @@
 package com.example.testapis.mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.example.testapis.entity.Media;
-import com.example.testapis.info.PageInfo;
-import org.apache.ibatis.annotations.Mapper;
+import com.example.testapis.info.KindAndHotLimit;import com.example.testapis.info.PageInfo;import org.apache.ibatis.annotations.Mapper;import org.apache.ibatis.annotations.Param;import java.util.List;
 
-import java.util.List;
 @Mapper
 public interface MediaMapper {
     int deleteByPrimaryKey(String id);
@@ -24,8 +21,9 @@ public interface MediaMapper {
 
     List<Media> findAll();
 
-    Integer countById(@Param("id")String id);
+    Integer countById(@Param("id") String id);
 
     Integer count();
 
+    List<Media> findAllByKindInfoAndHot(KindAndHotLimit kindAndHotLimit);
 }

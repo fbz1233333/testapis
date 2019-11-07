@@ -1,4 +1,6 @@
 package com.example.testapis.mapper;
+import com.example.testapis.info.LoginInfo;
+import com.example.testapis.results.FindIdAndNameAndIsDelByNameAndPasswordResult;
 
 import com.example.testapis.entity.User;
 import com.example.testapis.info.PageInfo;
@@ -26,7 +28,10 @@ public interface UserMapper {
 
     List<User> findAllByPage(PageInfo pageInfo);
 
-     Integer count();
+    Integer count();
+
+    List<FindIdAndNameAndIsDelByNameAndPasswordResult> findIdAndNameAndIsDelByNameAndPassword(LoginInfo loginInfo);
+
 
 
 }
