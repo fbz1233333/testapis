@@ -1,11 +1,11 @@
 package com.example.testapis.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
 
 @Data
-public class User implements Serializable {
+public class User {
+    private static final long serialVersionUID = 1L;
     private String id;
 
     private String name;
@@ -18,6 +18,7 @@ public class User implements Serializable {
 
     private Date updateTime;
 
-    private static final long serialVersionUID = 1L;
+    private Date tokenTime;
 
+    private String token;
 }

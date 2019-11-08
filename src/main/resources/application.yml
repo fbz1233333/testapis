@@ -4,7 +4,7 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://cdb-5jxq3ux4.bj.tencentcdb.com:10030/zhihu?serverTimezone=UTC
+#    url: jdbc:mysql://cdb-5jxq3ux4.bj.tencentcdb.com:10030/testapi?serverTimezone=UTC
 #    username: root
 #    password: fbz961110
 #    driver-class-name: com.mysql.cj.jdbc.Driver

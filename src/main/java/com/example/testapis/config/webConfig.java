@@ -21,10 +21,11 @@ public class webConfig {
             //
 //            @Override
 //            public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//                registry.addResourceHandler("/videos/**").addResourceLocations("file:/home/fanbangzhen/media/videos/");
+//                registry.addResourceHandler("/image/**").addResourceLocations("file:/home/fanbangzhen/medias/media_pic");
 //            }
         };
     }
+
 
 
 
