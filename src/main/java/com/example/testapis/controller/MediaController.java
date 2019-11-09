@@ -8,8 +8,10 @@ import com.example.testapis.mapper.MediaMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,6 +25,7 @@ public class MediaController {
 
     @Autowired
     MediaMapper mediaMapper;
+
 
     @GetMapping("media/{id}")
     public Media getById(@PathVariable String id){
@@ -75,10 +78,13 @@ public class MediaController {
 
     @PostMapping("media/getMixedMediaLimit")
     public Object getMixedMedia(@RequestBody MixedInfo mixedInfo){
+
+
+
         logger.info("获取的info为:{}",mixedInfo);
         HashMap<String,Object> map=new HashMap<>();
         for (String kindStr:mixedInfo.getMixedStr()){
-            logger.info("当前的kind为:{}",kindStr);
+//            logger.info("当前的kind为:{}",kindStr);
 
 
             KindAndHotLimit kindAndHotLimit=new KindAndHotLimit();
@@ -87,7 +93,7 @@ public class MediaController {
             List<Media> medias=mediaMapper.findAllByKindInfoAndHot(kindAndHotLimit);
 
 
-            logger.info("请求所得medias:{}",medias);
+//            logger.info("请求所得medias:{}",medias);
             map.put(kindStr.toLowerCase()+"List",medias);
         }
 

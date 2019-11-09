@@ -6,6 +6,7 @@ import com.example.testapis.info.PageInfo;
 import com.example.testapis.info.TokenInfo;
 import com.example.testapis.mapper.UserMapper;
 import com.example.testapis.results.FindIdAndNameByPasswordAndNameResult;
+import com.example.testapis.utils.RedisUtil;
 import com.example.testapis.utils.TokenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,9 @@ public class UserController {
 
     @Autowired
     TokenUtils tokenUtils;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     @GetMapping("user/{id}")
     public User getById(@PathVariable String id){
@@ -81,11 +85,13 @@ public class UserController {
         FindIdAndNameByPasswordAndNameResult result=userMapper.findIdAndNameByPasswordAndName(loginInfo);
 
         if (result==null){
-            logger.info("没有这样的用户");
+            logger.info("没有这样的用户:{}",loginInfo);
             map.put("errorInfo","no such user");
         }else{
             logger.info("用户信息为:{}",result);
             String token=tokenUtils.getToken(result);
+            redisUtil.getAndSet(result.getId(),token);
+            map.put("userInfo",result);
             map.put("token",token);
         }
 
