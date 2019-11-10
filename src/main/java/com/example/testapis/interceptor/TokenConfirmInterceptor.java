@@ -1,8 +1,11 @@
 package com.example.testapis.interceptor;
 
+import com.example.testapis.annotiation.UserLoginToken;
 import com.example.testapis.utils.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -10,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
 
 public class TokenConfirmInterceptor implements HandlerInterceptor {
     @Resource
@@ -20,16 +24,22 @@ public class TokenConfirmInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token=request.getHeader("token");
-        String id=request.getHeader("UID");
-        logger.info("Authorization:{}",token);
-        logger.info("UID:{}",id);
-        if (id==null || token==null){
-            logger.info("未授权");
-        }else if (redisUtil.count(id,token) ){
-            logger.info("token验证成功");
-        }else {
-            logger.info("未登录");
+        HandlerMethod handlerMethod=(HandlerMethod)handler;
+        Method method=handlerMethod.getMethod();
+        if (method.isAnnotationPresent(UserLoginToken.class)){
+            String token=request.getHeader("token");
+            String id=request.getHeader("UID");
+            logger.info("token:{}",token);
+            logger.info("UID:{}",id);
+            if (id==null || token==null){
+                throw new RuntimeException("无token，请重新登录");
+            }else if (redisUtil.count(id,token) ){
+                logger.info("token验证成功");
+                return true;
+            }else {
+                throw new RuntimeException("未登录，请重新登录");
+            }
+
         }
         return true;
     }

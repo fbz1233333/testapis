@@ -2,6 +2,7 @@ package com.example.testapis.config;
 
 
 import com.example.testapis.interceptor.TokenConfirmInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -21,6 +22,11 @@ public class WebConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(new TokenConfirmInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(tokenConfirmInterceptor()).addPathPatterns("/api/**");
     }
+    @Bean
+    public TokenConfirmInterceptor tokenConfirmInterceptor(){
+        return new TokenConfirmInterceptor();
+    }
+
 }

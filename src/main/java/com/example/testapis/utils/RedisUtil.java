@@ -1,11 +1,17 @@
 package com.example.testapis.utils;
 
+import com.example.testapis.controller.UserController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RedisUtil {
+    static Logger logger = LoggerFactory.getLogger(RedisUtil.class);
+
+
     @Autowired
     RedisTemplate<String,String> redisTemplate;
 
@@ -37,6 +43,8 @@ public class RedisUtil {
         return result;
     }
     public boolean count(final String key,String value){
+        logger.info("比较中....");
+
         boolean result=false;
         try {
             result= value.equals(redisTemplate.opsForValue().get(key));

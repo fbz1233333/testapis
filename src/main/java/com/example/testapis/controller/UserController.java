@@ -99,9 +99,9 @@ public class UserController {
         return map;
     }
 
-    @GetMapping("user/uuuu")
+    @GetMapping("uuuu")
     @UserLoginToken
     public String info(){
-        return "dddd";
+        return "sssss";
     }
 }
