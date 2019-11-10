@@ -1,5 +1,6 @@
 package com.example.testapis.controller;
 
+import com.example.testapis.annotiation.UserLoginToken;
 import com.example.testapis.entity.User;
 import com.example.testapis.info.LoginInfo;
 import com.example.testapis.info.PageInfo;
@@ -96,5 +97,11 @@ public class UserController {
         }
 
         return map;
+    }
+
+    @GetMapping("user/uuuu")
+    @UserLoginToken
+    public String info(){
+        return "dddd";
     }
 }
