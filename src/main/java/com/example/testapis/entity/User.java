@@ -18,7 +18,5 @@ public class User {
 
     private Date updateTime;
 
-    private Date tokenTime;
-
-    private String token;
+    private String headpic;
 }

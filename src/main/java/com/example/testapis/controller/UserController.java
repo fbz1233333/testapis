@@ -98,10 +98,19 @@ public class UserController {
 
         return map;
     }
+//
+//    @GetMapping("uuuu")
+//    @UserLoginToken
+//    public String info(){
+//        return "sssss";
+//    }
 
-    @GetMapping("uuuu")
+    @GetMapping("user/myInfo/{id}")
     @UserLoginToken
-    public String info(){
-        return "sssss";
+    public Object getMyInfo(@PathVariable String id){
+        logger.info("请求的id:{}",id);
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("myInfo",userMapper.findIdAndNameAndCreateTimeAndHeadPicById(id));
+        return map;
     }
 }

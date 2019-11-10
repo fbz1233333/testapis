@@ -1,9 +1,8 @@
 package com.example.testapis.mapper;
-import java.util.Date;
 
 import com.example.testapis.entity.User;
-import com.example.testapis.info.LoginInfo;import com.example.testapis.info.PageInfo;
-import com.example.testapis.info.TokenInfo;
+import com.example.testapis.info.LoginInfo;import com.example.testapis.info.PageInfo;import com.example.testapis.info.TokenInfo;
+import com.example.testapis.results.FindIdAndNameAndCreateTimeAndHeadPicByIdResult;
 import com.example.testapis.results.FindIdAndNameByPasswordAndNameResult;import org.apache.ibatis.annotations.Mapper;import org.apache.ibatis.annotations.Param;import java.util.List;
 
 @Mapper
@@ -34,5 +33,5 @@ public interface UserMapper {
 
     int updateTokenAndTokenTimeById(TokenInfo tokenInfo);
 
-
+    FindIdAndNameAndCreateTimeAndHeadPicByIdResult findIdAndNameAndCreateTimeAndHeadPicById(@Param("id") String id);
 }
