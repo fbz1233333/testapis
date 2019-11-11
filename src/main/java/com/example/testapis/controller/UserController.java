@@ -12,8 +12,10 @@ import com.example.testapis.utils.TokenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.ImagingOpException;
 import java.util.Date;
 import java.util.HashMap;
@@ -66,6 +68,12 @@ public class UserController {
         return "success";
     }
 
+    @GetMapping("user/no_login")
+    public Object error(){
+        HashMap<String ,Object> map=new HashMap<>();
+        map.put("errorInfo","没登陆");
+        return map;
+    }
 
 
     @PostMapping("user/getByPage")
@@ -98,19 +106,27 @@ public class UserController {
 
         return map;
     }
-//
-//    @GetMapping("uuuu")
-//    @UserLoginToken
-//    public String info(){
-//        return "sssss";
-//    }
+
+    @GetMapping("user/NoToken")
+    public Object info(){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("errorInfo","NO_TOKEN,未登录");
+        return map;
+    }
 
     @GetMapping("user/myInfo/{id}")
     @UserLoginToken
-    public Object getMyInfo(@PathVariable String id){
+    public Object getMyInfo(@PathVariable String id, HttpServletRequest request){
         logger.info("请求的id:{}",id);
+        logger.info("header UID:{}",request.getHeader("UID"));
         HashMap<String,Object> map=new HashMap<>();
-        map.put("myInfo",userMapper.findIdAndNameAndCreateTimeAndHeadPicById(id));
+        if (id.equals(request.getHeader("UID"))){
+            map.put("myInfo",userMapper.findIdAndNameAndCreateTimeAndHeadPicById(id));
+        }else {
+            map.put("errorInfo","请求一个未经授权的信息");
+        }
         return map;
     }
+
+
 }

@@ -24,6 +24,7 @@ public class TokenConfirmInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
         HandlerMethod handlerMethod=(HandlerMethod)handler;
         Method method=handlerMethod.getMethod();
         if (method.isAnnotationPresent(UserLoginToken.class)){
@@ -31,15 +32,14 @@ public class TokenConfirmInterceptor implements HandlerInterceptor {
             String id=request.getHeader("UID");
             logger.info("token:{}",token);
             logger.info("UID:{}",id);
-            if (id==null || token==null){
-                throw new RuntimeException("无token，请重新登录");
-            }else if (redisUtil.count(id,token) ){
+          if (redisUtil.count(id,token) ){
                 logger.info("token验证成功");
                 return true;
             }else {
-                throw new RuntimeException("未登录，请重新登录");
+                logger.info("验证失败,无权限");
+                response.sendRedirect("/api/user/NoToken");
+                return  false;
             }
-
         }
         return true;
     }
