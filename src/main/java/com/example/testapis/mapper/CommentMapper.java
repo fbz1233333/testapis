@@ -1,4 +1,6 @@
 package com.example.testapis.mapper;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 import com.example.testapis.entity.Comment;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,4 +18,8 @@ public interface CommentMapper {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+
+    List<Comment> findAllByMediaid(@Param("mediaid")String mediaid);
+
+
 }

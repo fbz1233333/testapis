@@ -1,5 +1,6 @@
 package com.example.testapis.controller;
 
+import com.example.testapis.annotiation.UserLoginToken;
 import com.example.testapis.entity.Media;
 import com.example.testapis.info.KindAndHotLimit;
 import com.example.testapis.info.MixedInfo;
@@ -12,10 +13,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -51,8 +49,11 @@ public class MediaController {
     }
 
     @PostMapping("media/insert")
+    @UserLoginToken
     public String insertMedia(@RequestBody Media media){
         logger.info("请求所得的数据Media:{}",media);
+        media.setId(UUID.randomUUID().toString());
+        media.setImageinfo("default.png");
         media.setUpdateTime(new Date());
         mediaMapper.insert(media);
         return "success";

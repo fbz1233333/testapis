@@ -13,4 +13,11 @@ mybatis:
 server:
   port: 9200
 
+file:
+  image:
+    originPath: /image/**
+    toPath: file:/d:/medias/media_pic/
+url:
+  basic: /api/**
+
 

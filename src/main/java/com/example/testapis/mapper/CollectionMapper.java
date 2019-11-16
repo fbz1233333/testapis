@@ -1,4 +1,5 @@
 package com.example.testapis.mapper;
+import com.example.testapis.info.I01;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -20,6 +21,9 @@ public interface CollectionMapper {
     int updateByPrimaryKey(Collection record);
 
     List<Collection> findAllByUserid(@Param("userid")String userid);
+
+    Collection findByUseridAndMediaid(I01 i01);
+
 
 
 }
