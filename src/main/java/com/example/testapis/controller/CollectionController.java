@@ -38,6 +38,12 @@ public class CollectionController {
         return map;
     }
 
+    @DeleteMapping("collection/delete/{id}")
+    @UserLoginToken
+    public void delelte(@PathVariable String  id){
+        collectionMapper.deleteByPrimaryKey(id);
+    }
+
     @PostMapping("collection/insert")
     @UserLoginToken
     public void iii(@RequestBody Collection collection){
