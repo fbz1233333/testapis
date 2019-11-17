@@ -1,4 +1,8 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 300MB
   datasource:
     url: jdbc:mysql://localhost:3306/testapi?serverTimezone=UTC
     username: root
@@ -17,7 +21,16 @@ file:
   image:
     originPath: /image/**
     toPath: file:/d:/medias/media_pic/
+    path: d:/medias/media_pic/
+    name: 20
 url:
   basic: /api/**
 
+
+media:
+  state:
+    draft: state_draft
+    complete: state_complete
+  image:
+    default: default.png
 

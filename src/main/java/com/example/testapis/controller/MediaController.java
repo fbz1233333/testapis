@@ -6,13 +6,19 @@ import com.example.testapis.info.KindAndHotLimit;
 import com.example.testapis.info.MixedInfo;
 import com.example.testapis.info.PageInfo;
 import com.example.testapis.mapper.MediaMapper;
+import com.example.testapis.utils.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.*;
 
 @RestController
@@ -47,14 +53,16 @@ public class MediaController {
         mediaMapper.updateByPrimaryKeySelective(media);
         return "success";
     }
-
+    @Value("${media.image.default}")
+    String IMG_DEFAULT;
     @PostMapping("media/insert")
     @UserLoginToken
     public String insertMedia(@RequestBody Media media){
         logger.info("请求所得的数据Media:{}",media);
         media.setId(UUID.randomUUID().toString());
-        media.setImageinfo("default.png");
+        media.setImageinfo(IMG_DEFAULT);
         media.setUpdateTime(new Date());
+        media.setState(state_draft);
         mediaMapper.insert(media);
         return "success";
     }
@@ -101,4 +109,65 @@ public class MediaController {
         return map;
     }
 
+
+    @Value("${file.image.path}")
+    String BASIC_PATH;
+
+    @Value("${file.image.name}")
+    Integer random_name;
+
+    @Value("${media.state.complete}")
+    String state_complete;
+
+    @Autowired
+    RandomUtils randomUtils;
+
+    @PostMapping("media/upload/{id}")
+    public void upload(@RequestBody MultipartFile file,@PathVariable String id) throws IOException {
+        logger.info("请求的id:{}",id);
+        String fileName=file.getOriginalFilename();
+        String new_name=randomUtils.getRandomString(random_name);
+        String suffix= fileName.substring(fileName.lastIndexOf(".") + 1);
+
+        String new_file_name=new_name+'.'+suffix;
+
+        String FileTo=BASIC_PATH+new_file_name;
+        logger.info(FileTo);
+        File to=new File(FileTo);
+        file.transferTo(to);
+
+        Media media=new Media();
+        media.setId(id);
+        media.setImageinfo(new_file_name);
+        media.setState(state_complete);
+        mediaMapper.updateByPrimaryKeySelective(media);
+
+
+
+
+
+
+
+
+    }
+
+    @Value("${media.state.draft}")
+    String state_draft;
+
+
+    @GetMapping("media/findDrafts/{id}")
+    @UserLoginToken
+    public Object getDrafts(@PathVariable String  id){
+        HashMap<String ,Object> map=new HashMap<>();
+        map.put("myDrafts",mediaMapper.findAllByStateAndUserid(state_draft,id));
+        map.put("myCompletes",mediaMapper.findAllByStateAndUserid(state_complete,id));
+
+        return map;
+    }
+
+    @DeleteMapping("media/delete/{id}")
+    @UserLoginToken
+    public void delete(@PathVariable String  id){
+        mediaMapper.deleteByPrimaryKey(id);
+    }
 }

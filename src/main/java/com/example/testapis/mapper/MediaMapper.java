@@ -26,4 +26,11 @@ public interface MediaMapper {
     Integer count();
 
     List<Media> findAllByKindInfoAndHot(KindAndHotLimit kindAndHotLimit);
+
+    List<Media> findAllByStateAndUserid(@Param("state")String state,@Param("userid")String userid);
+
+    int updateImageinfoById(@Param("updatedImageinfo")String updatedImageinfo,@Param("id")String id);
+
+
+
 }

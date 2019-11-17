@@ -95,13 +95,14 @@ public class UserController {
 
         if (result==null){
             logger.info("没有这样的用户:{}",loginInfo);
-            map.put("errorInfo","no such user");
+            map.put("result","LOGIN_FAILED");
         }else{
             logger.info("用户信息为:{}",result);
             String token=tokenUtils.getToken(result);
             redisUtil.getAndSet(result.getId(),token);
-            map.put("userInfo",result);
+            map.put("id",result.getId());
             map.put("token",token);
+            map.put("result","LOGIN_SUCCESS");
         }
 
         return map;

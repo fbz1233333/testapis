@@ -11,8 +11,6 @@ public class Media {
 
     private String userid;
 
-    private String username;
-
     private Date updateTime;
 
     private String h1;
@@ -35,4 +33,7 @@ public class Media {
 
     private Integer hot;
 
+    private String userName;
+
+    private String state;
 }
