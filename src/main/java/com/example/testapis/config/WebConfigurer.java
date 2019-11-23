@@ -20,6 +20,12 @@ public class WebConfigurer implements WebMvcConfigurer {
     @Value("${file.image.toPath}")
     String IMG_TO_PATH;
 
+    @Value("${file.md.originPath}")
+    String MD_ORIGIN_PATH;
+
+    @Value("${file.md.toPath}")
+    String MD_TO_PATH;
+
 
     @Value("${url.basic}")
     String URL_BASIC;
@@ -27,6 +33,7 @@ public class WebConfigurer implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(IMG_ORGIN_PATH).addResourceLocations(IMG_TO_PATH);
+        registry.addResourceHandler(MD_ORIGIN_PATH).addResourceLocations(MD_TO_PATH);
     }
 
     // 这个方法用来注册拦截器，我们自己写好的拦截器需要通过这里添加注册才能生效

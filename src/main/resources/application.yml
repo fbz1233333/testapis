@@ -1,30 +1,17 @@
 spring:
+  redis:
+    timeout: 5000
+  profiles:
+    active: dev
   servlet:
     multipart:
       max-file-size: 200MB
       max-request-size: 300MB
-  datasource:
-    url: jdbc:mysql://localhost:3306/testapi?serverTimezone=UTC
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://cdb-5jxq3ux4.bj.tencentcdb.com:10030/testapi?serverTimezone=UTC
-#    username: root
-#    password: fbz961110
-#    driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 server:
   port: 9200
 
-file:
-  image:
-    originPath: /image/**
-    toPath: file:/d:/medias/media_pic/
-    path: d:/medias/media_pic/
-    name: 20
-url:
-  basic: /api/**
 
 
 media:
@@ -33,4 +20,3 @@ media:
     complete: state_complete
   image:
     default: default.png
-

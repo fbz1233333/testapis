@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 @Component
 public class RandomUtils {
-    public String getRandomString(int length){
+    public String getRandomString(Integer length){
         String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         Random random=new Random();
         StringBuffer sb=new StringBuffer();

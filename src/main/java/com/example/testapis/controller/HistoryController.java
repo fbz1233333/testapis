@@ -38,4 +38,10 @@ public class HistoryController {
         historyMapper.insert(history);
 
     }
+
+    @DeleteMapping("history/{id}")
+    @UserLoginToken
+    public void iii(@PathVariable String id){
+        historyMapper.deleteByPrimaryKey(id);
+    }
 }

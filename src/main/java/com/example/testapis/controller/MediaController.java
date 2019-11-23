@@ -123,33 +123,38 @@ public class MediaController {
     RandomUtils randomUtils;
 
     @PostMapping("media/upload/{id}")
-    public void upload(@RequestBody MultipartFile file,@PathVariable String id) throws IOException {
-        logger.info("请求的id:{}",id);
-        String fileName=file.getOriginalFilename();
-        String new_name=randomUtils.getRandomString(random_name);
-        String suffix= fileName.substring(fileName.lastIndexOf(".") + 1);
-
-        String new_file_name=new_name+'.'+suffix;
-
-        String FileTo=BASIC_PATH+new_file_name;
-        logger.info(FileTo);
-        File to=new File(FileTo);
-        file.transferTo(to);
-
-        Media media=new Media();
-        media.setId(id);
-        media.setImageinfo(new_file_name);
-        media.setState(state_complete);
-        mediaMapper.updateByPrimaryKeySelective(media);
+        public void upload(@RequestBody MultipartFile file,@PathVariable String id) throws IOException {
+            logger.info("请求的id:{}",id);
+            String fileName=file.getOriginalFilename();
+            String new_name=randomUtils.getRandomString(random_name);
 
 
+            String suffix= null;
+            if (fileName != null) {
+                suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+            }
+
+            String new_file_name=new_name+'.'+suffix;
+
+            String FileTo=BASIC_PATH+new_file_name;
+            logger.info(FileTo);
+            File to=new File(FileTo);
+            file.transferTo(to);
+
+            Media media=new Media();
+            media.setId(id);
+            media.setImageinfo(new_file_name);
+            media.setState(state_complete);
+            mediaMapper.updateByPrimaryKeySelective(media);
 
 
 
 
 
 
-    }
+
+
+        }
 
     @Value("${media.state.draft}")
     String state_draft;

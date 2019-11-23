@@ -1,0 +1,21 @@
+spring:
+  datasource:
+
+    url: jdbc:mysql://cdb-5jxq3ux4.bj.tencentcdb.com:10030/testapi?serverTimezone=UTC
+    username: root
+    password: fbz961110
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+file:
+  image:
+    originPath: /image/**
+    toPath: file:/home/fanbangzhen/medias/media_pic/
+    path: /home/fanbangzhen/medias/media_pic/
+    name: 20
+url:
+  basic: /api/**
+
+
+
+
