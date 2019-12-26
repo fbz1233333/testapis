@@ -86,6 +86,7 @@ public class UserController {
     }
 
     @PostMapping("user/login")
+    //user login
     public Object login(@RequestBody LoginInfo loginInfo){
         logger.info("loginInfo:{}",loginInfo);
         HashMap<String ,Object> map=new HashMap<>();
